@@ -1,0 +1,18 @@
+{
+	"name": "dpdp-compliance-audit",
+	"displayName": "DPDPA Compliance Audit",
+	"version": "2.2.0",
+	"description": "DPDPA audit + Correct MCP (auth/vault). Skills never call Nest APIs directly — use correct_* MCP tools. Includes md-to-pdf and static scanner.",
+	"author": {
+		"name": "Correct",
+		"email": "support@correctapp.ai"
+	},
+	"logo": "assets/logo.svg",
+	"rules": "./rules/",
+	"skills": "./skills/",
+	"scripts": "./scripts/",
+	"commands": "./commands/",
+	"references": "./references/",
+	"resources": "./resources/",
+	"examples": "./examples/"
+}

@@ -1,0 +1,85 @@
+---
+description: Applies DPDPA (Digital Personal Data Protection Act) compliance rules when handling PII, telemetry, user registration, logging, cookies, trackers, or AI data pipelines.
+globs: ['**/*']
+alwaysApply: false
+---
+
+# DPDPA Compliance Rules
+
+This project processes digital personal data, making it subject to the Indian
+Digital Personal Data Protection Act (DPDPA) 2023. When writing or modifying
+code that interacts with sensitive data, you must apply the following
+guardrails:
+
+## 1. Security Safeguards (Section 8)
+
+- **Plaintext Secrets**: Never hardcode API keys, passwords, database
+  connections, or private keys.
+- **In-Transit**: Enforce TLS 1.3 across all endpoints. Avoid plain HTTP URLs in
+  production config.
+- **SSL Verification**: Do not disable SSL validation (`verify=False`,
+  `rejectUnauthorized: false`).
+- **Cryptography**: Avoid weak algorithms like MD5/SHA1 for hashes involving
+  passwords or sensitive data.
+- **PII Logging**: Never output plaintext PII (Aadhaar, PAN, phone numbers,
+  email, location) in logging systems.
+- **PII Encryption**: Store biometrics, Aadhaar, and location telemetry using
+  AES-256 field-level encryption.
+
+## 2. Consent & Notice Management (Section 5 & 6)
+
+- **No Pre-Checked Toggles**: Consent checkboxes for cookies, tracking, or
+  marketing must be unchecked by default.
+- **Consent Gates**: Wrap all third-party analytics/ad pixels (Google Analytics,
+  Meta Pixel, Mixpanel, Amplitude) inside consent checks (e.g.
+  `if (hasConsent('analytics')) { ... }`).
+- **Interoperable Consent Managers**: Expose endpoints/webhooks to handle
+  consent revocation requests.
+
+## 3. Storage & Retention Limitation (Section 8(7) & 12)
+
+- **Automated Erasure**: Implement TTL indexes, cron cleanups, or lifecycle
+  routines to delete inactive data tables or records (especially location
+  histories) within 3 years of last user activity.
+
+## 4. Minor Protection Rules (Section 9)
+
+- **No Behavioral Tracking**: Turn off tracking, targeted ads, and profiling
+  logic entirely for accounts flagged as minor users (under 18).
+- **Parental Verification**: Enforce parental/guardian consent validation at
+  registration for children.
+
+## 5. Data Principal Rights (Sections 11–14)
+
+- **Data Export**: Provide access endpoints ("Download My Data") yielding
+  structured user records.
+- **Right to Erasure**: Expose cascading deletion pathways to purge accounts and
+  child subprocessors.
+- **Grievance Channel**: Establish a visible contact (e.g.,
+  `privacy@company.com`) and ticketing hook.
+
+## 6. AI/ML Compliance (Module 6)
+
+- **Data Minimization**: Strip out unneeded PII from vector embeddings or model
+  feature vectors.
+- **Model Security**: Limit public inference APIs with rate limits to prevent
+  model extraction.
+- **Poisoning Defense**: Sanitize user feedback inputs before routing to
+  continuous learning loops.
+
+---
+
+### Run DPDPA Compliance Audit Scan
+
+Scanner skips agent/IDE dirs (`.agents`, `.cursor`, `.claude`, …) and `.env*`
+files. Run from the plugin scripts path (or Cursor local plugin install):
+
+```bash
+python3 <plugin>/scripts/dpdp_scanner.py .
+```
+
+Machine-readable JSON:
+
+```bash
+python3 <plugin>/scripts/dpdp_scanner.py . --json
+```

@@ -1,0 +1,222 @@
+{
+  "workspace": "/home/user/projects/connectindia-app",
+  "scan_timestamp": "2026-06-29T16:50:00+05:30",
+  "target_type": "webapp",
+  "total_files_scanned": 87,
+  "overall_score": 52,
+  "overall_status": "NEEDS_ATTENTION",
+  "pillar_scores": {
+    "consent_notice": {
+      "name": "Consent & Notice Management",
+      "sections": "Sections 5 & 6",
+      "max_penalty": "₹50 Crores",
+      "score": 76,
+      "status": "GOOD",
+      "findings_count": 2
+    },
+    "security_safeguards": {
+      "name": "Security Safeguards & Encryption",
+      "sections": "Section 8",
+      "max_penalty": "₹250 Crores",
+      "score": 28,
+      "status": "CRITICAL",
+      "findings_count": 6
+    },
+    "data_retention": {
+      "name": "Data Retention & Lifecycle",
+      "sections": "Section 8(7) & 12",
+      "max_penalty": "₹250 Crores",
+      "score": 88,
+      "status": "GOOD",
+      "findings_count": 1
+    },
+    "minor_protection": {
+      "name": "Children's Data Safeguards",
+      "sections": "Section 9",
+      "max_penalty": "₹200 Crores",
+      "score": 100,
+      "status": "PASS",
+      "findings_count": 0
+    },
+    "data_principal_rights": {
+      "name": "Data Principal Rights",
+      "sections": "Sections 11–14",
+      "max_penalty": "₹250 Crores",
+      "score": 56,
+      "status": "NEEDS_ATTENTION",
+      "findings_count": 3
+    },
+    "ai_governance": {
+      "name": "AI & ML Governance",
+      "sections": "Module 6 / DPDPA AI Lifecycle",
+      "max_penalty": "₹250 Crores",
+      "score": 40,
+      "status": "WARNING",
+      "findings_count": 3
+    },
+    "cross_border": {
+      "name": "Cross-Border Data Transfer",
+      "sections": "Section 16",
+      "max_penalty": "₹250 Crores",
+      "score": 95,
+      "status": "PASS",
+      "findings_count": 1
+    }
+  },
+  "findings": [
+    {
+      "id": "PLAINTEXT_SECRET",
+      "pillar": "security_safeguards",
+      "severity": "CRITICAL",
+      "file": "./config/database.js",
+      "line": 12,
+      "content": "const DB_PASSWORD = \"prod_db_p@ssw0rd_2026!\"",
+      "match_text": "DB_PASSWORD = \"prod_db_p@ssw0rd_2026!\"",
+      "description": "Hardcoded plaintext credential or secret detected.",
+      "dpdpa_section": "Section 8 — Reasonable Security Safeguards",
+      "penalty": "Up to ₹250 Crores",
+      "remediation": "Move secrets to environment variables or a vault service."
+    },
+    {
+      "id": "SSL_BYPASS",
+      "pillar": "security_safeguards",
+      "severity": "CRITICAL",
+      "file": "./services/payment.py",
+      "line": 34,
+      "content": "resp = requests.post(url, data=payload, verify=False)",
+      "match_text": "verify=False",
+      "description": "SSL/TLS certificate verification is explicitly disabled.",
+      "dpdpa_section": "Section 8 — Severe security safeguard bypass",
+      "penalty": "Up to ₹250 Crores",
+      "remediation": "Remove SSL verification bypass. Use proper CA certificates."
+    },
+    {
+      "id": "PII_IN_LOGS",
+      "pillar": "security_safeguards",
+      "severity": "MEDIUM",
+      "file": "./routes/user.js",
+      "line": 67,
+      "content": "console.log('User registered:', user.aadhaar, user.email, user.phone);",
+      "match_text": "console.log('User registered:', user.aadhaar, user.email, user.phone)",
+      "description": "PII field names found inside logging statements.",
+      "dpdpa_section": "Section 8 — Security Safeguards (log exposure)",
+      "penalty": "Up to ₹250 Crores",
+      "remediation": "Mask or redact PII before logging."
+    },
+    {
+      "id": "UNCONSENTED_TRACKER",
+      "pillar": "consent_notice",
+      "severity": "HIGH",
+      "file": "./public/index.html",
+      "line": 15,
+      "content": "<script src=\"https://connect.facebook.net/en_US/fbevents.js\"></script>",
+      "match_text": "connect.facebook.net",
+      "description": "Third-party analytics/tracking script detected without consent wrapper.",
+      "dpdpa_section": "Section 5 & 6 — Valid consent required before tracking",
+      "penalty": "Up to ₹50 Crores",
+      "remediation": "Wrap tracker initialization inside a consent check."
+    },
+    {
+      "id": "PRECHECKED_CONSENT",
+      "pillar": "consent_notice",
+      "severity": "HIGH",
+      "file": "./components/SignupForm.jsx",
+      "line": 89,
+      "content": "<input type=\"checkbox\" checked=\"checked\" name=\"marketing_consent\" />",
+      "match_text": "checked=\"checked\"",
+      "description": "Pre-checked consent checkbox detected.",
+      "dpdpa_section": "Section 5 — Consent must be freely given via clear affirmative action",
+      "penalty": "Up to ₹50 Crores",
+      "remediation": "Remove pre-checked states from consent checkboxes."
+    },
+    {
+      "id": "AI_PII_IN_TRAINING",
+      "pillar": "ai_governance",
+      "severity": "HIGH",
+      "file": "./ml/prepare_dataset.py",
+      "line": 41,
+      "content": "features = [user.email, user.phone, user.aadhaar, user.purchase_history]",
+      "match_text": "aadhaar, user.purchase_history]",
+      "description": "PII field names found in ML training pipeline.",
+      "dpdpa_section": "Module 6 — Data minimization: strip PII from training datasets",
+      "penalty": "Up to ₹250 Crores",
+      "remediation": "Remove raw PII from feature vectors. Anonymize before model ingestion."
+    },
+    {
+      "id": "CROSS_BORDER_REGION",
+      "pillar": "cross_border",
+      "severity": "MEDIUM",
+      "file": "./terraform/main.tf",
+      "line": 8,
+      "content": "region = \"us-east-1\"",
+      "match_text": "region = \"us-east-1\"",
+      "description": "Cloud region configured outside India.",
+      "dpdpa_section": "Section 16 — Cross-border transfer restrictions",
+      "penalty": "Up to ₹250 Crores",
+      "remediation": "Verify DPA coverage. Plan for data localization contingency."
+    }
+  ],
+  "global_warnings": [
+    {
+      "id": "MISSING_RETENTION",
+      "pillar": "data_retention",
+      "severity": "HIGH",
+      "description": "No data retention, TTL, or automated purge logic found.",
+      "dpdpa_section": "Section 8(7) — Storage limitation",
+      "penalty": "Up to ₹250 Crores",
+      "remediation": "Implement database TTL triggers and data lifecycle policies."
+    },
+    {
+      "id": "MISSING_ERASURE_API",
+      "pillar": "data_principal_rights",
+      "severity": "HIGH",
+      "description": "No user data erasure/account deletion endpoint found.",
+      "dpdpa_section": "Section 12 — Right to Erasure",
+      "penalty": "Up to ₹250 Crores",
+      "remediation": "Implement a 'Delete My Account' endpoint with cascade deletion."
+    },
+    {
+      "id": "MISSING_DATA_EXPORT",
+      "pillar": "data_principal_rights",
+      "severity": "MEDIUM",
+      "description": "No user data export/download endpoint found.",
+      "dpdpa_section": "Section 11 — Right to Access",
+      "penalty": "Up to ₹250 Crores",
+      "remediation": "Implement a 'Download My Data' feature."
+    },
+    {
+      "id": "MISSING_GRIEVANCE_CHANNEL",
+      "pillar": "data_principal_rights",
+      "severity": "MEDIUM",
+      "description": "No grievance redressal channel found.",
+      "dpdpa_section": "Section 13 — Right to Grievance Redressal",
+      "penalty": "Up to ₹50 Crores",
+      "remediation": "Establish a dedicated privacy contact and ticketing system."
+    },
+    {
+      "id": "AI_NO_RATE_LIMIT",
+      "pillar": "ai_governance",
+      "severity": "MEDIUM",
+      "description": "No rate limiting logic found for ML inference APIs.",
+      "dpdpa_section": "Module 6 — Model extraction defense",
+      "penalty": "Up to ₹250 Crores",
+      "remediation": "Implement API rate limiting on all inference endpoints."
+    },
+    {
+      "id": "NO_BREACH_HANDLER",
+      "pillar": "security_safeguards",
+      "severity": "HIGH",
+      "description": "No breach/incident notification handling code found.",
+      "dpdpa_section": "Section 8(6) — Breach notification within 72 hours",
+      "penalty": "Up to ₹200 Crores",
+      "remediation": "Implement incident response module with DPBI notification."
+    }
+  ],
+  "summary": {
+    "CRITICAL": 2,
+    "HIGH": 8,
+    "MEDIUM": 5,
+    "LOW": 0,
+    "INFO": 1
+  }
+}
