@@ -2,18 +2,13 @@
 	"name": "correct-plugins",
 	"owner": {
 		"name": "Correct",
-		"email": "contact@correctapp.ai"
+		"email": "yashnerkar512@gmail.com"
 	},
 	"metadata": {
 		"description": "Marketplace for Correct Cursor plugins",
 		"version": "0.1.0"
 	},
 	"plugins": [
-		{
-			"name": "starter-advanced",
-			"source": "./plugins/starter-advanced",
-			"description": "Full-featured plugin with rules, skills, agents, commands, hooks, and MCP"
-		},
 		{
 			"name": "dpdp-compliance-audit",
 			"source": "./plugins/dpdp-compliance-audit",

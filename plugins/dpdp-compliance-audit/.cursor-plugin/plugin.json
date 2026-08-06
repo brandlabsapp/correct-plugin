@@ -5,7 +5,7 @@
 	"description": "DPDPA audit + Correct MCP (auth/vault). Skills never call Nest APIs directly — use correct_* MCP tools. Includes md-to-pdf and static scanner.",
 	"author": {
 		"name": "Correct",
-		"email": "support@correctapp.ai"
+		"email": "yashnerkar512@gmail.com"
 	},
 	"logo": "assets/logo.svg",
 	"rules": "./rules/",
