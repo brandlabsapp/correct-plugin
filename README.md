@@ -1,21 +1,14 @@
-# Cursor plugin template
+# Correct Cursor plugins
 
-Build and publish Cursor Marketplace plugins from a single repo.
+Marketplace repo for Correct plugins.
 
-Two starter plugins are included:
+- **dpdp-compliance-audit**: DPDPA audit. Hosted Correct MCP for login and vault upload. Local scanner and PDF report.
 
-- **starter-simple**: rules and skills only
-- **starter-advanced**: rules, skills, agents, commands, hooks, MCP, and scripts
+Install from the Cursor Marketplace, or from this repo via a team marketplace import.
 
-## Getting started
+Plugin source: `plugins/dpdp-compliance-audit`. Registry: `.cursor-plugin/marketplace.json`.
 
-[Use this template](https://github.com/cursor/plugin-template/generate) to create a new repository, then customize:
-
-1. `.cursor-plugin/marketplace.json`: set marketplace `name`, `owner`, and `metadata`.
-2. `plugins/*/.cursor-plugin/plugin.json`: set `name` (lowercase kebab-case), `displayName`, `author`, `description`, `keywords`, `license`, and `version`.
-3. Replace placeholder rules, skills, agents, commands, hooks, scripts, and logos.
-
-To add more plugins, see `docs/add-a-plugin.md`.
+To add another plugin, see `docs/add-a-plugin.md`.
 
 ## Single plugin vs multi-plugin
 

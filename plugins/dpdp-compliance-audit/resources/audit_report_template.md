@@ -3,7 +3,7 @@
 **Date**: {scan_timestamp}
 **Project**: `{workspace_name}`
 {organisation_line}**Target Type**: {target_type}
-**Files Scanned**: {total_files_scanned}
+{sector_line}**Files Scanned**: {total_files_scanned}
 **Overall Compliance Score**: {overall_score} / 100 — {overall_status_icon} **{overall_status}**
 
 ---
@@ -12,17 +12,23 @@
 
 {executive_summary}
 
+> **Sector context**: {sector_advisory}
+
 ### Compliance Score Matrix
 
 | DPDPA Pillar | Score | Status | Findings | Statutory Sections | Max Penalty |
 |---|---|---|---|---|---|
-| Consent & Notice Management | {consent_notice_score}% | {consent_notice_status} | {consent_notice_count} | Sections 5 & 6 | ₹50 Crores |
-| Security Safeguards & Encryption | {security_safeguards_score}% | {security_safeguards_status} | {security_safeguards_count} | Section 8 | ₹250 Crores |
-| Data Retention & Lifecycle | {data_retention_score}% | {data_retention_status} | {data_retention_count} | Section 8(7) & 12 | ₹250 Crores |
-| Children's Data Safeguards | {minor_protection_score}% | {minor_protection_status} | {minor_protection_count} | Section 9 | ₹200 Crores |
-| Data Principal Rights | {data_principal_rights_score}% | {data_principal_rights_status} | {data_principal_rights_count} | Sections 11–14 | ₹250 Crores |
-| AI & ML Governance | {ai_governance_score}% | {ai_governance_status} | {ai_governance_count} | Module 6 | ₹250 Crores |
-| Cross-Border Data Transfer | {cross_border_score}% | {cross_border_status} | {cross_border_count} | Section 16 | ₹250 Crores |
+| Consent & Notice Management | {consent_notice_score}% | {consent_notice_status} | {consent_notice_count} | {consent_notice_sections} | {consent_notice_max_penalty} |
+| Security Safeguards & Encryption | {security_safeguards_score}% | {security_safeguards_status} | {security_safeguards_count} | {security_safeguards_sections} | {security_safeguards_max_penalty} |
+| Data Retention & Lifecycle | {data_retention_score}% | {data_retention_status} | {data_retention_count} | {data_retention_sections} | {data_retention_max_penalty} |
+| Children's Data Safeguards | {minor_protection_score}% | {minor_protection_status} | {minor_protection_count} | {minor_protection_sections} | {minor_protection_max_penalty} |
+| Data Principal Rights | {data_principal_rights_score}% | {data_principal_rights_status} | {data_principal_rights_count} | {data_principal_rights_sections} | {data_principal_rights_max_penalty} |
+| AI & ML Governance | {ai_governance_score}% | {ai_governance_status} | {ai_governance_count} | {ai_governance_sections} | {ai_governance_max_penalty} |
+| Cross-Border Data Transfer | {cross_border_score}% | {cross_border_status} | {cross_border_count} | {cross_border_sections} | {cross_border_max_penalty} |
+
+> Penalty figures cite the DPDPA Schedule (see Section 33) as reproduced by dpdpa.com —
+> a secondary legal-reference source, not the official Gazette. Verify before relying
+> on exact figures for a real compliance decision; this report is not legal advice.
 
 ---
 
@@ -34,7 +40,7 @@
 
 ## 3. Detailed Audit by DPDPA Pillar
 
-### Pillar A: Consent & Notice Management (Sections 5 & 6)
+### Pillar A: Consent & Notice Management ({consent_notice_sections})
 - **Score**: {consent_notice_score}%
 - **Status**: {consent_notice_status}
 - **What was checked**:
@@ -47,7 +53,7 @@
 
 ---
 
-### Pillar B: Security Safeguards & Encryption (Section 8)
+### Pillar B: Security Safeguards & Encryption ({security_safeguards_sections})
 - **Score**: {security_safeguards_score}%
 - **Status**: {security_safeguards_status}
 - **What was checked**:
@@ -65,7 +71,7 @@
 
 ---
 
-### Pillar C: Data Retention & Lifecycle (Section 8(7) & 12)
+### Pillar C: Data Retention & Lifecycle ({data_retention_sections})
 - **Score**: {data_retention_score}%
 - **Status**: {data_retention_status}
 - **What was checked**:
@@ -78,7 +84,7 @@
 
 ---
 
-### Pillar D: Children's Data Safeguards (Section 9)
+### Pillar D: Children's Data Safeguards ({minor_protection_sections})
 - **Score**: {minor_protection_score}%
 - **Status**: {minor_protection_status}
 - **What was checked**:
@@ -91,13 +97,13 @@
 
 ---
 
-### Pillar E: Data Principal Rights (Sections 11–14)
+### Pillar E: Data Principal Rights ({data_principal_rights_sections})
 - **Score**: {data_principal_rights_score}%
 - **Status**: {data_principal_rights_status}
 - **What was checked**:
   - Data export / "Download My Data" endpoint (Section 11)
   - Account deletion / data erasure handler (Section 12)
-  - Grievance redressal channel — privacy@, DPO contact (Section 13)
+  - Grievance redressal channel — privacy@, DPO contact (Section 8(10) mechanism; Section 13 is the related Data Principal right)
   - Nominee / legacy contact feature (Section 14)
 - **Findings**:
 {data_principal_rights_findings_list}
@@ -105,7 +111,7 @@
 
 ---
 
-### Pillar F: AI & ML Governance (Module 6)
+### Pillar F: AI & ML Governance (interpretive — Section 8 applied to ML pipelines)
 - **Score**: {ai_governance_score}%
 - **Status**: {ai_governance_status}
 - **What was checked**:
@@ -120,9 +126,11 @@
 
 ---
 
-### Pillar G: Cross-Border Data Transfer (Section 16)
+### Pillar G: Cross-Border Data Transfer ({cross_border_sections})
 - **Score**: {cross_border_score}%
 - **Status**: {cross_border_status}
+- **Current status**: no country is presently restricted under Section 16 — findings
+  below are a "verify and monitor" signal, not evidence of an active violation.
 - **What was checked**:
   - Cloud infrastructure region configurations (AWS, GCP, Azure)
   - Third-party APIs/services hosted outside India

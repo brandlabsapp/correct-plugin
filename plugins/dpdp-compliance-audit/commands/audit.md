@@ -31,13 +31,19 @@ description: Full DPDPA audit — Correct MCP login first, then scan, PDF, vault
 ### 3. Scan (local)
 
 ```bash
-python3 <plugin>/scripts/dpdp_scanner.py "<target>" --target-type webapp --json
+python3 <plugin>/scripts/dpdp_scanner.py "<target>" --target-type webapp --json \
+  --json-out "<abs>/dpdpa_compliance_report.json" \
+  --markdown-out "<abs>/dpdpa_compliance_report.md"
 ```
 
 ### 4. PDF (local)
 
+Use the JSON report (real tables, severity colors, grouped fixes) — not
+`md-to-pdf.py`, which flattens tables to plain text:
+
 ```bash
-python3 <plugin>/scripts/md-to-pdf.py "<abs>/dpdpa_compliance_report.md"
+python3 <plugin>/scripts/generate_pdf_report.py "<abs>/dpdpa_compliance_report.json" \
+  --company-name "<name>" --company-uuid "<uuid>"
 ```
 
 ### 5. Upload (MCP)

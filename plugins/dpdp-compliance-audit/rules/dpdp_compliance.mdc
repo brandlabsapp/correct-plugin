@@ -58,7 +58,7 @@ guardrails:
 - **Grievance Channel**: Establish a visible contact (e.g.,
   `privacy@company.com`) and ticketing hook.
 
-## 6. AI/ML Compliance (Module 6)
+## 6. AI/ML Compliance (interpretive — Section 8 general obligations applied to ML pipelines; not a distinct DPDPA chapter)
 
 - **Data Minimization**: Strip out unneeded PII from vector embeddings or model
   feature vectors.

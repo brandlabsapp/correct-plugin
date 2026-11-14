@@ -9,7 +9,7 @@
     "consent_notice": {
       "name": "Consent & Notice Management",
       "sections": "Sections 5 & 6",
-      "max_penalty": "₹50 Crores",
+      "max_penalty": "₹200 Crores (Schedule Item 1)",
       "score": 76,
       "status": "GOOD",
       "findings_count": 2
@@ -17,7 +17,7 @@
     "security_safeguards": {
       "name": "Security Safeguards & Encryption",
       "sections": "Section 8",
-      "max_penalty": "₹250 Crores",
+      "max_penalty": "₹200 Crores (Schedule Item 2 — Section 8(5))",
       "score": 28,
       "status": "CRITICAL",
       "findings_count": 6
@@ -25,7 +25,7 @@
     "data_retention": {
       "name": "Data Retention & Lifecycle",
       "sections": "Section 8(7) & 12",
-      "max_penalty": "₹250 Crores",
+      "max_penalty": "₹200 Crores (Schedule Item 1)",
       "score": 88,
       "status": "GOOD",
       "findings_count": 1
@@ -33,7 +33,7 @@
     "minor_protection": {
       "name": "Children's Data Safeguards",
       "sections": "Section 9",
-      "max_penalty": "₹200 Crores",
+      "max_penalty": "₹200 Crores (Schedule Item 1)",
       "score": 100,
       "status": "PASS",
       "findings_count": 0
@@ -41,15 +41,15 @@
     "data_principal_rights": {
       "name": "Data Principal Rights",
       "sections": "Sections 11–14",
-      "max_penalty": "₹250 Crores",
+      "max_penalty": "₹200 Crores (Schedule Item 1 — Sections 11, 12 & 14; Section 13 grievance redressal is not separately listed, see notes)",
       "score": 56,
       "status": "NEEDS_ATTENTION",
       "findings_count": 3
     },
     "ai_governance": {
       "name": "AI & ML Governance",
-      "sections": "Module 6 / DPDPA AI Lifecycle",
-      "max_penalty": "₹250 Crores",
+      "sections": "Interpretive — not a distinct DPDPA chapter; grounded in Section 8 general obligations",
+      "max_penalty": "₹200 Crores (Schedule Item 1/2, via Section 8)",
       "score": 40,
       "status": "WARNING",
       "findings_count": 3
@@ -57,7 +57,7 @@
     "cross_border": {
       "name": "Cross-Border Data Transfer",
       "sections": "Section 16",
-      "max_penalty": "₹250 Crores",
+      "max_penalty": "Not directly scheduled; indirect via Board directions (Item 8, ₹250 Crores) if unresolved after notice",
       "score": 95,
       "status": "PASS",
       "findings_count": 1
@@ -73,8 +73,8 @@
       "content": "const DB_PASSWORD = \"prod_db_p@ssw0rd_2026!\"",
       "match_text": "DB_PASSWORD = \"prod_db_p@ssw0rd_2026!\"",
       "description": "Hardcoded plaintext credential or secret detected.",
-      "dpdpa_section": "Section 8 — Reasonable Security Safeguards",
-      "penalty": "Up to ₹250 Crores",
+      "dpdpa_section": "Section 8(5) — Reasonable Security Safeguards",
+      "penalty": "Up to ₹200 Crores (Schedule Item 2)",
       "remediation": "Move secrets to environment variables or a vault service."
     },
     {
@@ -86,8 +86,8 @@
       "content": "resp = requests.post(url, data=payload, verify=False)",
       "match_text": "verify=False",
       "description": "SSL/TLS certificate verification is explicitly disabled.",
-      "dpdpa_section": "Section 8 — Severe security safeguard bypass",
-      "penalty": "Up to ₹250 Crores",
+      "dpdpa_section": "Section 8(5) — reasonable security safeguards",
+      "penalty": "Up to ₹200 Crores (Schedule Item 2)",
       "remediation": "Remove SSL verification bypass. Use proper CA certificates."
     },
     {
@@ -99,8 +99,8 @@
       "content": "console.log('User registered:', user.aadhaar, user.email, user.phone);",
       "match_text": "console.log('User registered:', user.aadhaar, user.email, user.phone)",
       "description": "PII field names found inside logging statements.",
-      "dpdpa_section": "Section 8 — Security Safeguards (log exposure)",
-      "penalty": "Up to ₹250 Crores",
+      "dpdpa_section": "Section 8(5) — security safeguards (log exposure)",
+      "penalty": "Up to ₹200 Crores (Schedule Item 2)",
       "remediation": "Mask or redact PII before logging."
     },
     {
@@ -113,7 +113,7 @@
       "match_text": "connect.facebook.net",
       "description": "Third-party analytics/tracking script detected without consent wrapper.",
       "dpdpa_section": "Section 5 & 6 — Valid consent required before tracking",
-      "penalty": "Up to ₹50 Crores",
+      "penalty": "Up to ₹200 Crores (Schedule Item 1)",
       "remediation": "Wrap tracker initialization inside a consent check."
     },
     {
@@ -126,7 +126,7 @@
       "match_text": "checked=\"checked\"",
       "description": "Pre-checked consent checkbox detected.",
       "dpdpa_section": "Section 5 — Consent must be freely given via clear affirmative action",
-      "penalty": "Up to ₹50 Crores",
+      "penalty": "Up to ₹200 Crores (Schedule Item 1)",
       "remediation": "Remove pre-checked states from consent checkboxes."
     },
     {
@@ -138,8 +138,8 @@
       "content": "features = [user.email, user.phone, user.aadhaar, user.purchase_history]",
       "match_text": "aadhaar, user.purchase_history]",
       "description": "PII field names found in ML training pipeline.",
-      "dpdpa_section": "Module 6 — Data minimization: strip PII from training datasets",
-      "penalty": "Up to ₹250 Crores",
+      "dpdpa_section": "Section 8 (general obligations, applied to ML pipelines) — not a standalone statutory AI chapter",
+      "penalty": "Up to ₹200 Crores (Schedule Item 1/2, via Section 8)",
       "remediation": "Remove raw PII from feature vectors. Anonymize before model ingestion."
     },
     {
@@ -151,8 +151,8 @@
       "content": "region = \"us-east-1\"",
       "match_text": "region = \"us-east-1\"",
       "description": "Cloud region configured outside India.",
-      "dpdpa_section": "Section 16 — Cross-border transfer restrictions",
-      "penalty": "Up to ₹250 Crores",
+      "dpdpa_section": "Section 16 — Cross-border transfer restrictions (blacklist framework; no country currently restricted)",
+      "penalty": "Not directly scheduled; indirect via Board directions (Item 8, ₹250 Crores) if unresolved after notice",
       "remediation": "Verify DPA coverage. Plan for data localization contingency."
     }
   ],
@@ -162,8 +162,8 @@
       "pillar": "data_retention",
       "severity": "HIGH",
       "description": "No data retention, TTL, or automated purge logic found.",
-      "dpdpa_section": "Section 8(7) — Storage limitation",
-      "penalty": "Up to ₹250 Crores",
+      "dpdpa_section": "Section 8(7) — Storage limitation; data must be erased when purpose is fulfilled",
+      "penalty": "Up to ₹200 Crores (Schedule Item 1)",
       "remediation": "Implement database TTL triggers and data lifecycle policies."
     },
     {
@@ -171,8 +171,8 @@
       "pillar": "data_principal_rights",
       "severity": "HIGH",
       "description": "No user data erasure/account deletion endpoint found.",
-      "dpdpa_section": "Section 12 — Right to Erasure",
-      "penalty": "Up to ₹250 Crores",
+      "dpdpa_section": "Section 12 — Right to Correction, Completion, Updation & Erasure",
+      "penalty": "Up to ₹200 Crores (Schedule Item 1)",
       "remediation": "Implement a 'Delete My Account' endpoint with cascade deletion."
     },
     {
@@ -180,8 +180,8 @@
       "pillar": "data_principal_rights",
       "severity": "MEDIUM",
       "description": "No user data export/download endpoint found.",
-      "dpdpa_section": "Section 11 — Right to Access",
-      "penalty": "Up to ₹250 Crores",
+      "dpdpa_section": "Section 11 — Right to Access Information",
+      "penalty": "Up to ₹200 Crores (Schedule Item 1)",
       "remediation": "Implement a 'Download My Data' feature."
     },
     {
@@ -189,8 +189,8 @@
       "pillar": "data_principal_rights",
       "severity": "MEDIUM",
       "description": "No grievance redressal channel found.",
-      "dpdpa_section": "Section 13 — Right to Grievance Redressal",
-      "penalty": "Up to ₹50 Crores",
+      "dpdpa_section": "Section 8(10) — internal grievance redressal mechanism (Section 13 is the related Data Principal right)",
+      "penalty": "Up to ₹200 Crores (Schedule Item 1)",
       "remediation": "Establish a dedicated privacy contact and ticketing system."
     },
     {
@@ -198,8 +198,8 @@
       "pillar": "ai_governance",
       "severity": "MEDIUM",
       "description": "No rate limiting logic found for ML inference APIs.",
-      "dpdpa_section": "Module 6 — Model extraction defense",
-      "penalty": "Up to ₹250 Crores",
+      "dpdpa_section": "Section 8(4)/(5) (general & security obligations, applied to ML inference endpoints) — not a standalone statutory AI chapter",
+      "penalty": "Up to ₹200 Crores (Schedule Item 1/2, via Section 8)",
       "remediation": "Implement API rate limiting on all inference endpoints."
     },
     {
@@ -207,8 +207,8 @@
       "pillar": "security_safeguards",
       "severity": "HIGH",
       "description": "No breach/incident notification handling code found.",
-      "dpdpa_section": "Section 8(6) — Breach notification within 72 hours",
-      "penalty": "Up to ₹200 Crores",
+      "dpdpa_section": "Section 8(6) — Mandatory breach notification to the Board and affected Data Principals",
+      "penalty": "Up to ₹200 Crores (Schedule Item 3)",
       "remediation": "Implement incident response module with DPBI notification."
     }
   ],

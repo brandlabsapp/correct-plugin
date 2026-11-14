@@ -1,8 +1,6 @@
 ---
 name: dpdp-compliance-audit
-description: >-
- Full DPDPA audit via Correct MCP: login, company pick, static scan, report,
- PDF, vault upload. Never call Correct HTTP APIs directly — use MCP tools only.
+description: Full DPDPA audit via Correct MCP. Login, company pick, static scan, report, PDF, vault upload. Never call Correct HTTP APIs directly — use MCP tools only.
 ---
 
 # DPDPA Compliance Audit Skill
@@ -28,8 +26,9 @@ server (plugin `.mcp.json`) and stop.
 ```bash
 PLUGIN="<this-plugin-root>"
 SCANNER="$PLUGIN/scripts/dpdp_scanner.py"
+PDF_GEN="$PLUGIN/scripts/generate_pdf_report.py"
 MD2PDF="$PLUGIN/scripts/md-to-pdf.py"
-chmod +x "$SCANNER" "$MD2PDF"
+chmod +x "$SCANNER" "$PDF_GEN" "$MD2PDF"
 ```
 
 ---
@@ -70,23 +69,34 @@ If user names a package (e.g. `correct-app`), scan that path only.
 ### Step 4: Scanner (local script — not Correct API)
 
 ```bash
-python3 "$SCANNER" <target_directory> --target-type <type> --json
+python3 "$SCANNER" <target_directory> --target-type <type> --json \
+  --json-out "<abs>/dpdpa_compliance_report.json" \
+  --markdown-out "<abs>/dpdpa_compliance_report.md" \
+  --company-name "<name>" --company-uuid "<uuid>"
 ```
 
 ### Step 5–6: Confirm findings + legal notes
 
-Dismiss noise (placeholders, localhost). Scanner already skips `.agents/`, `.cursor/`, `.claude/`, `.env*`, `node_modules/`.  
+Dismiss noise (placeholders, localhost). Scanner already skips `.agents/`, `.cursor/`, `.claude/`, `.env*`, `node_modules/`, framework build output (`.mastra`, `.turbo`, etc.), and its own previously generated reports.
 Enrich from `$PLUGIN/references/dpdp_compliance_notes.md`.
 
-### Step 7: Write report
+### Step 7: Reports already written
 
-Template: `$PLUGIN/resources/audit_report_template.md`  
-Write `dpdpa_compliance_report.md` (include company name/uuid).
+The scanner wrote both `dpdpa_compliance_report.md` (human-readable, uses
+`$PLUGIN/resources/audit_report_template.md`) and `dpdpa_compliance_report.json`
+(structured — feeds the PDF step) in Step 4. No separate write step needed.
 
 ### Step 8: PDF (local) + vault upload (MCP)
 
+Use the **JSON** report, not the Markdown one — it renders real bordered
+tables, severity color coding, and grouped findings-with-fixes directly from
+the structured data. `md-to-pdf.py` is for arbitrary Markdown files; it
+flattens tables to plain text and loses the severity/status info this report
+needs to look right.
+
 ```bash
-python3 "$MD2PDF" "<abs>/dpdpa_compliance_report.md"
+python3 "$PDF_GEN" "<abs>/dpdpa_compliance_report.json" \
+  --company-name "<name>" --company-uuid "<uuid>"
 # → sibling .pdf
 ```
 
@@ -128,10 +138,11 @@ Confirm tool result has `documentId` / `folderId`. Never print full JWT.
 
 ## Local scripts only
 
-| Script                    | Purpose            |
-| ------------------------- | ------------------ |
-| `scripts/dpdp_scanner.py` | Static DPDPA scan  |
-| `scripts/md-to-pdf.py`    | MD → PDF (`fpdf2`) |
+| Script                            | Purpose                                                              |
+| ---------------------------------- | --------------------------------------------------------------------- |
+| `scripts/dpdp_scanner.py`          | Static DPDPA scan                                                     |
+| `scripts/generate_pdf_report.py`   | JSON report → properly formatted PDF (tables, colors, fixes; `fpdf2`) |
+| `scripts/md-to-pdf.py`             | Generic Markdown → PDF for any other file (`fpdf2`)                   |
 
 ## Slash commands
 

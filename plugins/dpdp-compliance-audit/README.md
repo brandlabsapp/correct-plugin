@@ -15,9 +15,9 @@ Cursor background: [Plugins docs](https://cursor.com/docs/plugins).
 | `skills/`                    | Main agent workflow (`SKILL.md`)                    |
 | `commands/`                  | Slash / chat commands (`/audit`, `/login`, …)       |
 | `rules/`                     | Always-on guidance (Correct MCP only, no Nest curl) |
-| `scripts/`                   | Local Python: scanner + md→PDF                      |
+| `scripts/`                   | Local Python: scanner + JSON→PDF report renderer     |
 | `mcp/`                       | Correct MCP server (`correct_*` tools)              |
-| `.mcp.json`                  | MCP config Cursor loads with the plugin             |
+| `mcp.json`                   | Hosted Correct MCP Cursor loads with the plugin    |
 
 **Hard rule:** skills/commands never call Nest HTTP (`curl`, `/api/v1/...`).
 Auth and vault go only through `correct_*` MCP tools.
@@ -91,7 +91,7 @@ Skills alone are not enough. The **correct** MCP server must show connected in
 
 ### A. Hosted MCP (default)
 
-Repo `.mcp.json` already points at production:
+Repo `mcp.json` already points at production:
 
 ```json
 {
@@ -292,7 +292,7 @@ plugins/dpdp-compliance-audit/
 ├── commands/                    # slash / agent commands
 ├── skills/SKILL.md              # main DPDPA workflow
 ├── rules/                       # always-on guidance
-├── scripts/                     # scanner + md-to-pdf
+├── scripts/                     # scanner + generate_pdf_report.py (+ generic md-to-pdf.py)
 ├── references/                  # legal / enrichment notes
 ├── resources/                   # report template
 ├── examples/                    # sample findings

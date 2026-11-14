@@ -5,6 +5,12 @@ description: Convert markdown report to PDF locally (not a Correct API call).
 
 # MD → PDF (local)
 
+> For the DPDPA audit report specifically, use `generate_pdf_report.py` on the
+> scanner's `--json-out` file instead (`/audit` already does this) — it
+> renders real tables, severity colors, and grouped fixes that this generic
+> converter can't (Markdown tables become flattened plain text here). Use
+> this command for any other Markdown file.
+
 ## Preflight
 
 ```bash

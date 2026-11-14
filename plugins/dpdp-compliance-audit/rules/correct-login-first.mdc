@@ -6,10 +6,10 @@ alwaysApply: true
 
 # DPDP: Correct MCP only
 
-1. Enable **correct** MCP (plugin `.mcp.json`).
+1. Enable **correct** MCP (plugin `mcp.json`, hosted at https://mcp.correctapp.ai/mcp).
 2. First: `correct_whoami` → OTP tools if logged out.
 3. Then: `correct_companies` → pick company.
-4. Then: local `scripts/dpdp_scanner.py` + write report + `md-to-pdf.py`.
+4. Then: local `scripts/dpdp_scanner.py`, then `scripts/generate_pdf_report.py`.
 5. Finally: `correct_upload_dpdp_report`.
 
 **Forbidden:** calling Correct HTTP APIs from shell/skills (`curl`, `/api/v1/...`, `correct-auth.sh`).  

@@ -2,8 +2,7 @@
 	"mcpServers": {
 		"correct": {
 			"type": "http",
-			"url": "https://mcp.correctapp.ai/mcp",
-			"note": "Hosted Correct MCP (multi-user). For local stdio see .mcp.json / mcp/cursor.mcp.example.json"
+			"url": "https://mcp.correctapp.ai/mcp"
 		}
 	}
 }

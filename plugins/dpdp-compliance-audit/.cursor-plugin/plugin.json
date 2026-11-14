@@ -8,6 +8,8 @@
 		"email": "yashnerkar512@gmail.com"
 	},
 	"logo": "assets/logo.svg",
+	"repository": "https://github.com/brandlabsapp/correct-plugin",
+	"keywords": ["dpdpa", "dpdp", "compliance", "privacy", "india"],
 	"rules": "./rules/",
 	"skills": "./skills/",
 	"scripts": "./scripts/",
